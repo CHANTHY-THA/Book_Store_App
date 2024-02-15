@@ -3,9 +3,10 @@ import 'splash_screen.dart';
 import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _navigateToRegistrationScreen() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => RegistrationScreen()),
+      MaterialPageRoute(builder: (context) => const RegistrationScreen()),
     );
   }
 
@@ -67,10 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => SplashScreen()), // Navigate to splash screen
+              MaterialPageRoute(builder: (context) => const SplashScreen()), // Navigate to splash screen
             );
           },
         ),
@@ -83,12 +84,12 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Welcome back', 
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // h1 siz
               ),
-              SizedBox(height: 8), 
-              Text(
+              const SizedBox(height: 8), 
+              const Text(
                 'Please enter your details', 
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
@@ -96,16 +97,16 @@ class _LoginScreenState extends State<LoginScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Username',
                     style: TextStyle(color: Colors.black),
                   ),
                   const SizedBox(height: 8.0),
                   Container(
-                    constraints: BoxConstraints(maxWidth: 400), 
+                    constraints: const BoxConstraints(maxWidth: 400), 
                     child: TextField(
                       controller: _usernameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter your username',
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 14.0),
                         border: InputBorder.none,
@@ -120,21 +121,21 @@ class _LoginScreenState extends State<LoginScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Password',
                     style: TextStyle(color: Colors.black),
                   ),
                   const SizedBox(height: 8.0),
                   Container(
-                    constraints: BoxConstraints(maxWidth: 400),
+                    constraints: const BoxConstraints(maxWidth: 400),
                     child: TextField(
                       controller: _passwordController,
                       obscureText: _obscurePassword,
                       decoration: InputDecoration(
                         hintText: 'Enter your password',
-                        hintStyle: TextStyle(color: Colors.grey, fontSize: 14.0),
+                        hintStyle: const TextStyle(color: Colors.grey, fontSize: 14.0),
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
@@ -150,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Row(
                     children: [
                       Theme(
@@ -165,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                               return Colors.transparent; 
                             }),
-                            side: BorderSide(color: Colors.grey), 
+                            side: const BorderSide(color: Colors.grey), 
                           ),
                         ),
                         child: Checkbox(
@@ -177,16 +178,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       ),
-                      Text(
+                      const Text(
                         'Remember for 30 days',
                         style: TextStyle(color: Colors.grey, fontSize: 14.0),
                       ),
-                      Spacer(), 
+                      const Spacer(), 
                       TextButton(
                         onPressed: () {
                           
                         },
-                        child: Text(
+                        child: const Text(
                           'Forgot Password',
                           style: TextStyle(color: Colors.black, fontSize: 14.0),
                         ),
@@ -231,8 +232,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    icon: Icon(Icons.g_mobiledata),
-                    label: Text(
+                    icon: const Icon(Icons.g_mobiledata),
+                    label: const Text(
                       'Sign in with Google',
                       style: TextStyle(color: Colors.black),
                     ),
@@ -241,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 onPressed: _navigateToRegistrationScreen,
-                child: Text(
+                child: const Text(
                   "Don't have an account? Sign up for free",
                   style: TextStyle(color: Colors.green), 
                 ),

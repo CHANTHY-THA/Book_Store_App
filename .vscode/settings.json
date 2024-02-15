@@ -1,4 +1,7 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
-    "cmake.sourceDirectory": "D:/UP/projects/mobile/book_shop/book_shop/linux"
+    "cmake.sourceDirectory": "D:/UP/projects/mobile/book_shop/book_shop/linux",
+    "cSpell.words": [
+        "mobiledata"
+    ]
 }

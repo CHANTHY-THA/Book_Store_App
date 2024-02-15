@@ -3,9 +3,10 @@ import 'splash_screen.dart';
 import 'login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({Key? key}) : super(key: key);
+  const RegistrationScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
@@ -55,11 +56,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         // Handle back button press
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginScreen()), 
+          MaterialPageRoute(builder: (context) => const LoginScreen()), 
         );
         return false;
       },
@@ -67,11 +69,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         backgroundColor: const Color(0xFFF9F9F9),
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               // Handle back button press
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginScreen()), 
+                MaterialPageRoute(builder: (context) => const LoginScreen()), 
               );
             },
           ),
@@ -84,12 +86,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Create an Account', 
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), 
                 ),
-                SizedBox(height: 8), 
-                Text(
+                const SizedBox(height: 8), 
+                const Text(
                   'Please enter your details', 
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
@@ -97,7 +99,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Username',
                       style: TextStyle(color: Colors.black),
                     ),
@@ -109,7 +111,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       child: TextField(
                         controller: _usernameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Enter your username',
                           hintStyle: TextStyle(color: Colors.grey, fontSize: 14.0),
                           border: InputBorder.none,
@@ -123,7 +125,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Password',
                       style: TextStyle(color: Colors.black),
                     ),
@@ -138,9 +140,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         obscureText: _obscurePassword,
                         decoration: InputDecoration(
                           hintText: 'Enter your password',
-                          hintStyle: TextStyle(color: Colors.grey, fontSize: 14.0),
+                          hintStyle: const TextStyle(color: Colors.grey, fontSize: 14.0),
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
                           suffixIcon: IconButton(
                             onPressed: () {
                               setState(() {
@@ -190,11 +192,11 @@ void main() {
   runApp(
     MaterialApp(
       theme: ThemeData(
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: const Color(0xFF0C8A7B),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFF0C8A7B),
         ),
       ),
-      home: RegistrationScreen(),
+      home: const RegistrationScreen(),
     ),
   );
 }
