@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'splash_screen.dart'; // Import your splash screen page here
-import 'login_screen.dart'; // Import your login screen page here
+import 'splash_screen.dart'; 
+import 'login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -59,7 +59,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       onWillPop: () async {
         // Handle back button press
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginScreen()), // Navigate to login screen
+          MaterialPageRoute(builder: (context) => LoginScreen()), 
         );
         return false;
       },
@@ -71,7 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             onPressed: () {
               // Handle back button press
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginScreen()), // Navigate to login screen
+                MaterialPageRoute(builder: (context) => LoginScreen()), 
               );
             },
           ),
@@ -85,15 +85,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Create an Account', // Header text
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // h1 size
+                  'Create an Account', 
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), 
                 ),
-                SizedBox(height: 8), // Spacer
+                SizedBox(height: 8), 
                 Text(
-                  'Please enter your details', // Subtitle text
+                  'Please enter your details', 
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
-                const SizedBox(height: 16.0), // Spacer
+                const SizedBox(height: 16.0), 
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

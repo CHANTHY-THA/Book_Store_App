@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'splash_screen.dart'; // Import your splash screen page here
-import 'registration_screen.dart'; // Import your registration screen page here
+import 'splash_screen.dart'; 
+import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -84,15 +84,15 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Welcome back', // Header text
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // h1 size
+                'Welcome back', 
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // h1 siz
               ),
-              SizedBox(height: 8), // Spacer
+              SizedBox(height: 8), 
               Text(
-                'Please enter your details', // Subtitle text
+                'Please enter your details', 
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-              const SizedBox(height: 16.0), // Spacer
+              const SizedBox(height: 16.0), 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -102,17 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8.0),
                   Container(
-  constraints: BoxConstraints(maxWidth: 400), // Adjust the maximum width as needed
-  child: TextField(
-    controller: _usernameController,
-    decoration: InputDecoration(
-      hintText: 'Enter your username',
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 14.0),
-      border: InputBorder.none,
-      contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
-    ),
-  ),
-),
+                    constraints: BoxConstraints(maxWidth: 400), 
+                    child: TextField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your username',
+                        hintStyle: TextStyle(color: Colors.grey, fontSize: 14.0),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                      ),
+                    ),
+                  ),
 
                 ],
               ),
@@ -126,29 +126,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8.0),
                   Container(
-  constraints: BoxConstraints(maxWidth: 400), // Adjust the maximum width as needed
-  child: TextField(
-    controller: _passwordController,
-    obscureText: _obscurePassword,
-    decoration: InputDecoration(
-      hintText: 'Enter your password',
-      hintStyle: TextStyle(color: Colors.grey, fontSize: 14.0),
-      border: InputBorder.none,
-      contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
-      suffixIcon: IconButton(
-        onPressed: () {
-          setState(() {
-            _obscurePassword = !_obscurePassword;
-          });
-        },
-        icon: Icon(
-          _obscurePassword ? Icons.visibility : Icons.visibility_off,
-          color: Colors.grey,
-        ),
-      ),
-    ),
-  ),
-),
+                    constraints: BoxConstraints(maxWidth: 400),
+                    child: TextField(
+                      controller: _passwordController,
+                      obscureText: _obscurePassword,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your password',
+                        hintStyle: TextStyle(color: Colors.grey, fontSize: 14.0),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                          icon: Icon(
+                            _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
 
                   SizedBox(height: 8.0),
                   Row(
@@ -161,11 +161,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             fillColor: MaterialStateColor.resolveWith((states) {
                               if (states.contains(MaterialState.selected)) {
-                                return const Color(0xFF0C8A7B); // Use the default cursor color when selected
+                                return const Color(0xFF0C8A7B); 
                               }
-                              return Colors.transparent; // Color when unselected
+                              return Colors.transparent; 
                             }),
-                            side: BorderSide(color: Colors.grey), // Outline color
+                            side: BorderSide(color: Colors.grey), 
                           ),
                         ),
                         child: Checkbox(
@@ -181,10 +181,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Remember for 30 days',
                         style: TextStyle(color: Colors.grey, fontSize: 14.0),
                       ),
-                      Spacer(), // Add a spacer to push "Forgot Password" to the right
+                      Spacer(), 
                       TextButton(
                         onPressed: () {
-                          // Implement your forgot password logic here
+                          
                         },
                         child: Text(
                           'Forgot Password',
@@ -243,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: _navigateToRegistrationScreen,
                 child: Text(
                   "Don't have an account? Sign up for free",
-                  style: TextStyle(color: Colors.green), // Change color to green
+                  style: TextStyle(color: Colors.green), 
                 ),
               ),
             ],
