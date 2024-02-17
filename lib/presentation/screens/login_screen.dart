@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'splash_screen.dart'; 
+import 'package:http/http.dart' as http;
+import 'splash_screen.dart';
 import 'registration_screen.dart';
-
+import 'home_screen.dart'; 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -30,20 +32,64 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _login() {
-    String username = _usernameController.text.trim();
-    String password = _passwordController.text.trim();
+  Future<void> _login() async {
+  String username = _usernameController.text.trim();
+  String password = _passwordController.text.trim();
 
-    if (username.isNotEmpty && password.isNotEmpty) {
-      print('Username: $username');
-      print('Password: $password');
-      print('Remember for 30 days: $_rememberFor30Days');
+  // Validate username and password
+  if (username.isEmpty || password.isEmpty) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text('Please enter both username and password.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+    return;
+  }
+
+  try {
+    final response = await http.post(
+      Uri.parse('http://localhost:5000'), 
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'password': password,
+      }),
+    );
+
+    // Print response status code and body for debugging
+    print('Response status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    // Handle response
+    if (response.statusCode == 200) {
+      // Clear input fields
+      _usernameController.clear();
+      _passwordController.clear();
+
+      // Login successful, navigate to home screen
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
     } else {
+      // Login failed, display error message
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Error'),
-          content: const Text('Welcome back Please enter both username and password.'),
+          content: const Text('Invalid username or password.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -53,7 +99,28 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     }
+  } catch (error) {
+    // Handle any errors that occurred during the HTTP request
+    print('Error: $error');
+    // ignore: use_build_context_synchronously
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text('An unexpected error occurred. Please try again later.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
+}
+
+
+// ==================================================================
 
   void _navigateToRegistrationScreen() {
     Navigator.push(
@@ -71,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const SplashScreen()), // Navigate to splash screen
+              MaterialPageRoute(builder: (context) => const SplashScreen()),
             );
           },
         ),
@@ -85,15 +152,15 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Welcome back', 
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // h1 siz
+                'Welcome back',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 8), 
+              const SizedBox(height: 8),
               const Text(
-                'Please enter your details', 
+                'Please enter your details',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-              const SizedBox(height: 16.0), 
+              const SizedBox(height: 32.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -103,7 +170,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8.0),
                   Container(
-                    constraints: const BoxConstraints(maxWidth: 400), 
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      color: Colors.white,
+                    ),
                     child: TextField(
                       controller: _usernameController,
                       decoration: const InputDecoration(
@@ -114,10 +184,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-
                 ],
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 8.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -127,7 +196,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8.0),
                   Container(
-                    constraints: const BoxConstraints(maxWidth: 400),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      color: Colors.white,
+                    ),
                     child: TextField(
                       controller: _passwordController,
                       obscureText: _obscurePassword,
@@ -150,7 +222,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 8.0),
                   Row(
                     children: [
@@ -158,15 +229,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         data: ThemeData(
                           checkboxTheme: CheckboxThemeData(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
+                              borderRadius: BorderRadius.circular(6),
                             ),
                             fillColor: MaterialStateColor.resolveWith((states) {
                               if (states.contains(MaterialState.selected)) {
-                                return const Color(0xFF0C8A7B); 
+                                return const Color(0xFF0C8A7B);
                               }
-                              return Colors.transparent; 
+                              return Colors.transparent;
                             }),
-                            side: const BorderSide(color: Colors.grey), 
+                            side: const BorderSide(color: Colors.grey),
                           ),
                         ),
                         child: Checkbox(
@@ -178,25 +249,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       ),
-                      const Text(
-                        'Remember for 30 days',
-                        style: TextStyle(color: Colors.grey, fontSize: 14.0),
-                      ),
-                      const Spacer(), 
-                      TextButton(
-                        onPressed: () {
-                          
-                        },
-                        child: const Text(
-                          'Forgot Password',
-                          style: TextStyle(color: Colors.black, fontSize: 14.0),
+                      const Padding(
+                        padding: EdgeInsets.zero,
+                        child: Text(
+                          'Remember for 30 days',
+                          style: TextStyle(color: Color.fromARGB(255, 197, 190, 190), fontSize: 14.0),
                         ),
                       ),
+                      const Spacer(),
                     ],
                   ),
                 ],
               ),
-              const SizedBox(height: 32.0),
+              const SizedBox(height: 24.0),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -205,7 +270,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: const Color(0xFF0C8A7B),
                     padding: const EdgeInsets.all(16.0),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(14),
                     ),
                   ),
                   child: const Text(
@@ -218,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 16.0),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
@@ -227,25 +292,39 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      primary: Colors.black,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     icon: const Icon(Icons.g_mobiledata),
-                    label: const Text(
-                      'Sign in with Google',
-                      style: TextStyle(color: Colors.black),
+                    label: const Padding(
+                      padding: EdgeInsets.only(top: 16, bottom: 16),
+                      child: Text(
+                        'Sign in with Google',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: _navigateToRegistrationScreen,
-                child: const Text(
-                  "Don't have an account? Sign up for free",
-                  style: TextStyle(color: Colors.green), 
-                ),
+              const SizedBox(height: 24.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Don't have an account? ",
+                  ),
+                  GestureDetector(
+                    onTap: _navigateToRegistrationScreen,
+                    child: const Text(
+                      "Sign up for free",
+                      style: TextStyle(color: Color(0xFF0C8A7B)),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -254,4 +333,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

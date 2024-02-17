@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:test/presentation/widgets/bottom_navigation.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+class CategoryScreen extends StatelessWidget {
+  const CategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cart'),
+        title: const Text('Category'),
       ),
       body: const Center(
-        child: Text('Cart Screen'),
+        child: Text('Category Screen'),
       ),
       bottomNavigationBar: const BottomNavigation(),
     );
