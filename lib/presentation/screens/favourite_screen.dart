@@ -24,9 +24,32 @@ class FavouriteScreen extends StatelessWidget {
     ];
 
     return Scaffold(
+      backgroundColor: const Color(0xFFF9F9F9),
       appBar: AppBar(
-        title: const Text('Favorite'),
+        backgroundColor: const Color(0xFFF9F9F9),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Center(
+                child: Text('Favourite'),
+              ),
+            ),
+            Icon(
+              Icons.favorite_border_outlined,
+              color: Colors.blueGrey,
+            ),
+          ],
+        ),
+        centerTitle: true,
       ),
+
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -50,12 +73,11 @@ class FavouriteScreen extends StatelessWidget {
   Widget _buildBookCard(String title, String author, String imageUrl, double rating, String price) {
     return Card(
       margin: const EdgeInsets.all(8),
-      // elevation: 4,
-      color: Colors.white, // Set the background color to white
-      shape: RoundedRectangleBorder(
-        side: BorderSide.none, // Remove the border
-        borderRadius: BorderRadius.circular(8),
-      ),
+      // color: Colors.white, // Set the background color to white
+      // shape: RoundedRectangleBorder(
+      //   side: BorderSide.none, // Remove the border
+      //   borderRadius: BorderRadius.circular(8),
+      // ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -106,7 +128,6 @@ class FavouriteScreen extends StatelessWidget {
               child: Text(price, style: const TextStyle(fontSize: 14.0)),
             ),
             // Generated code for this Container Widget...
-          
           ],
       ),
     );

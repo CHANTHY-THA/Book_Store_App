@@ -4,6 +4,7 @@ import 'package:test/presentation/screens/category_screen.dart';
 import 'package:test/presentation/screens/cart_screen.dart';
 import 'package:test/presentation/screens/home_screen.dart';
 import 'package:test/presentation/screens/profile_screen.dart';
+import 'package:test/presentation/screens/book_details_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -59,7 +60,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
       case 4:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ProfileScreen()),
+          // MaterialPageRoute(builder: (context) => const ProfileScreen()),
+          MaterialPageRoute(builder: (context) => const BookDetailScreen()),
         );
         break;
     }
