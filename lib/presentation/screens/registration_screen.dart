@@ -140,6 +140,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           },
         ),
         title: const Text('Registration'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(

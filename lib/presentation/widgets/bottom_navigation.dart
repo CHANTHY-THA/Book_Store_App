@@ -16,10 +16,11 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
+  // ignore: unused_field
   static final List<Widget> _screens = [
     const HomeScreen(),
     const FavouriteScreen(),
-    const CategoryScreen(),
+    CategoryScreen(),
     const CartScreen(),
     const ProfileScreen(),
   ];
@@ -32,31 +33,31 @@ class _BottomNavigationState extends State<BottomNavigation> {
     // Navigate to the corresponding screen based on the index
     switch (index) {
       case 0:
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
         break;
       case 1:
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const FavouriteScreen()),
         );
         break;
       case 2:
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const CategoryScreen()),
+          MaterialPageRoute(builder: (context) =>  CategoryScreen()),
         );
         break;
       case 3:
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const CartScreen()),
         );
         break;
       case 4:
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const ProfileScreen()),
         );
@@ -81,7 +82,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           label: 'Category',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_basket_outlined),
+          icon: Icon(Icons.local_mall_outlined),
           label: 'Shopping',
         ),
         BottomNavigationBarItem(

@@ -9,6 +9,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        centerTitle: true,
       ),
       body: const Center(
         child: Text('Profile Screen'),

@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
       // Login failed, display error message
@@ -143,6 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
           },
         ),
         title: const Text('Login'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
