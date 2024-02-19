@@ -1,9 +1,52 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'splash_screen.dart';
 import 'registration_screen.dart';
-import 'home_screen.dart'; 
+import 'home_screen.dart';
+
+class AuthService {
+  static const String apiUrl = 'http://localhost:5000/api/auth';
+
+  static Future<String?> login(String username, String password) async {
+    final response = await http.post(
+      Uri.parse('$apiUrl/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+      final String token = responseData['token'];
+      await _saveToken(token);
+      return token;
+    } else {
+      throw response; // Throw the response for logging purposes
+    }
+  }
+
+  static Future<void> _saveToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('jwt_token', token);
+  }
+
+  static Future<String?> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('jwt_token');
+  }
+
+  static Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('jwt_token');
+  }
+}
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -17,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _passwordController;
   bool _obscurePassword = true;
   bool _rememberFor30Days = false;
+  bool _isLoggingIn = false;
 
   @override
   void initState() {
@@ -33,81 +77,60 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
-  String username = _usernameController.text.trim();
-  String password = _passwordController.text.trim();
+    setState(() {
+      _isLoggingIn = true;
+    });
 
-  // Validate username and password
-  if (username.isEmpty || password.isEmpty) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: const Text('Please enter both username and password.'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-    return;
-  }
+    String username = _usernameController.text.trim();
+    String password = _passwordController.text.trim();
 
-  try {
-    final response = await http.post(
-      Uri.parse('http://localhost:5000'), 
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(<String, String>{
-        'username': username,
-        'password': password,
-      }),
-    );
+    if (username.isEmpty || password.isEmpty) {
+      _showErrorMessage('Please enter both username and password.');
+      setState(() {
+        _isLoggingIn = false;
+      });
+      return;
+    }
 
-    // Print response status code and body for debugging
-    print('Response status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    print('Data before request:');
+    print('Username: $username');
+    print('Password: $password');
 
-    // Handle response
-    if (response.statusCode == 200) {
-      // Clear input fields
+    try {
+      final token = await AuthService.login(username, password);
+      print('Token: $token');
+
       _usernameController.clear();
       _passwordController.clear();
 
-      // Login successful, navigate to home screen
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
-    } else {
-      // Login failed, display error message
-      // ignore: use_build_context_synchronously
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Invalid username or password.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
+    } catch (error) {
+      print('Login failed: $error');
+      if (error is http.Response) {
+        print('Response status code: ${error.statusCode}');
+        print('Response body: ${error.body}');
+      }
+      _showErrorMessage('Invalid username or password.');
     }
-  } catch (error) {
-    // Handle any errors that occurred during the HTTP request
-    print('Error: $error');
-    // ignore: use_build_context_synchronously
+
+    setState(() {
+      _isLoggingIn = false;
+    });
+
+    _usernameController.clear();
+    _passwordController.clear();
+  }
+
+  void _showErrorMessage(String message) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Error'),
-        content: const Text('An unexpected error occurred. Please try again later.'),
+        content: Text(message),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -117,10 +140,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}
-
-
-// ==================================================================
 
   void _navigateToRegistrationScreen() {
     Navigator.push(
@@ -266,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _login,
+                  onPressed: _isLoggingIn ? null : _login,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0C8A7B),
                     padding: const EdgeInsets.all(16.0),
@@ -274,12 +293,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  child: const Text(
-                    'Sign In',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: _isLoggingIn
+                      ? const CircularProgressIndicator()
+                      : const Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 16.0),

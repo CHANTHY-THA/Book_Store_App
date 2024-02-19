@@ -7,16 +7,17 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-      title: const Row(
-        children: [
-          Icon(Icons.book),
-          SizedBox(width: 8), 
-          Text('Fly Book'),
-        ],
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFF9F9F9), 
+        title: const Row(
+          children: [
+            Icon(Icons.book),
+            SizedBox(width: 8), 
+            Text('Fly Book'),
+          ],
+        ),
       ),
-    ),
-    body: SingleChildScrollView(
+      body: SingleChildScrollView( 
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +48,7 @@ class HomeScreen extends StatelessWidget {
             ),
             // Dummy data for best selling books
             _buildBookCardList(), 
-
+    
             // Trending Now Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-
+    
       bottomNavigationBar: const BottomNavigation(),
     );
   }
@@ -121,28 +122,28 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildTrendingCardList() {
-  // Dummy trending data
-  final List<Map<String, dynamic>> trendingBooks = [
-    {
-      'title': 'Where the Crawdads Sing',
-      'author': 'Delia Owens',
-      'imageUrl': 'https://images.penguinrandomhouse.com/cover/9780735211247',
-    },
-    {
-      'title': 'The Nightingale',
-      'author': 'Kristin Hannah',
-      'imageUrl': 'https://i.pinimg.com/474x/34/94/49/349449e0d5de052f6c34fe0f089c568d.jpg',
-    },
-    {
-      'title': 'Educated: A Memoir',
-      'author': 'Tara Westover',
-      'imageUrl': 'https://i.pinimg.com/736x/85/8d/c5/858dc52ccdf8e2bc9deff1cb352c3033.jpg',
-    },
-  ];
+    // Dummy trending data
+    final List<Map<String, dynamic>> trendingBooks = [
+      {
+        'title': 'Where the Crawdads Sing',
+        'author': 'Delia Owens',
+        'imageUrl': 'https://images.penguinrandomhouse.com/cover/9780735211247',
+      },
+      {
+        'title': 'The Nightingale',
+        'author': 'Kristin Hannah',
+        'imageUrl': 'https://i.pinimg.com/474x/34/94/49/349449e0d5de052f6c34fe0f089c568d.jpg',
+      },
+      {
+        'title': 'Educated: A Memoir',
+        'author': 'Tara Westover',
+        'imageUrl': 'https://i.pinimg.com/736x/85/8d/c5/858dc52ccdf8e2bc9deff1cb352c3033.jpg',
+      },
+    ];
 
-  // Build trending card list
-  return SingleChildScrollView(
-    scrollDirection: Axis.horizontal, 
+    // Build trending card list
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal, 
       child: Row(
         children: [
           for (final book in trendingBooks)

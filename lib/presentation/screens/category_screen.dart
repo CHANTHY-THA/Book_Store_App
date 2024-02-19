@@ -175,7 +175,7 @@ class CategoryItemCard extends StatelessWidget {
             ),
             title: Text(
               title,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             subtitle: Text('$numberOfProduct products'),
             trailing: const Icon(

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:test/presentation/screens/book_details_screen.dart';
 import 'package:test/presentation/screens/home_screen.dart';
 import 'package:test/presentation/screens/login_screen.dart';
 
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     Timer(const Duration(seconds: 5), () { 
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const HomeScreen(), // Navigate to LoginScreen
+          builder: (context) => const BookDetailScreen(), // Navigate to LoginScreen
         ),
       );
     });
