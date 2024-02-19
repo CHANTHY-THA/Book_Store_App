@@ -7,6 +7,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF9F9F9), 
       appBar: AppBar(
         backgroundColor: const Color(0xFFF9F9F9), 
         title: const Row(
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
             ),
             // Dummy data for best selling books
             _buildBookCardList(), 
-    
+
             // Trending Now Section
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +67,6 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-    
       bottomNavigationBar: const BottomNavigation(),
     );
   }
@@ -110,7 +110,6 @@ class HomeScreen extends StatelessWidget {
       },
     ];
 
-    // Build book card list
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal, 
       child: Row(
@@ -141,7 +140,6 @@ class HomeScreen extends StatelessWidget {
       },
     ];
 
-    // Build trending card list
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal, 
       child: Row(
@@ -156,20 +154,20 @@ class HomeScreen extends StatelessWidget {
   Widget _buildBookCard(String title, String author, String imageUrl, double rating, String price) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      elevation: 0, 
+      elevation: 0,
+      color: const Color(0xFFF9F9F9), 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Book Image with border radius
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(8.0)),
             child: SizedBox(
-              width: 120, 
-              height: 160, 
-              child: imageUrl.isNotEmpty 
+              width: 120,
+              height: 160,
+              child: imageUrl.isNotEmpty
                 ? Image.network(
                     imageUrl,
-                    fit: BoxFit.cover, 
+                    fit: BoxFit.cover,
                   )
                 : const SizedBox.shrink(),
             ),
@@ -185,32 +183,32 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          
-          // Title
-          SizedBox(
-            width: 120, 
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 8.0), 
-              child: Text(
-                title,
-                style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                softWrap: false, 
-              ),
-            ),
-          ),
 
           // Author
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(author, style: const TextStyle(fontSize: 14.0)),
           ),
+
+          // Title
+          SizedBox(
+            width: 120,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                softWrap: false,
+              ),
+            ),
+          ),
           
           // Price
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Text(price, style: const TextStyle(fontSize: 14.0)),
+            child: Text(price, style: const TextStyle(fontSize: 14.0, color: Colors.orange)),
           ),
         ],
       ),

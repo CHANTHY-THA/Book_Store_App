@@ -3,17 +3,17 @@ import 'package:test/presentation/widgets/bottom_navigation.dart';
 
 class CartItem {
   final String productName;
-  final String author; 
+  final String author;
   final double price;
   final int quantity;
-  final String imageUrl; 
+  final String imageUrl;
 
   CartItem({
     required this.productName,
-    required this.author, 
+    required this.author,
     required this.price,
     required this.quantity,
-    required this.imageUrl, 
+    required this.imageUrl,
   });
 }
 
@@ -23,7 +23,6 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Dummy data for cart items
     final List<CartItem> cartItems = [
       CartItem(
         productName: 'The Great Gatsby',
@@ -34,7 +33,7 @@ class CartScreen extends StatelessWidget {
       ),
       CartItem(
         productName: 'To Kill a Mockingbird',
-        author: 'Harper Lee', 
+        author: 'Harper Lee',
         price: 12.99,
         quantity: 1,
         imageUrl: 'https://5.imimg.com/data5/IU/SQ/GD/SELLER-43618059/book-cover-page-design.jpg',
@@ -46,7 +45,6 @@ class CartScreen extends StatelessWidget {
         quantity: 3,
         imageUrl: 'https://mapsystemsindia.com/images/Graphics/book-cover.jpg',
       ),
-      // Add more products here
       CartItem(
         productName: 'Pride and Prejudice',
         author: 'Jane Austen',
@@ -80,27 +78,84 @@ class CartScreen extends StatelessWidget {
             onPressed: () {
               // Add delete action
             },
-            icon: const Icon(Icons.delete_sweep_outlined),
+            icon: const Icon(Icons.delete_outline_sharp, color: Colors.blueGrey),
           ),
         ],
       ),
       body: Container(
-        color: const Color(0xFFF9F9F9), 
-        child: Padding(
-          padding: const EdgeInsets.all(16), 
-          child: ListView.builder(
-            itemCount: cartItems.length,
-            itemBuilder: (context, index) {
-              final item = cartItems[index];
-              return CartItemCard(
-                productName: item.productName,
-                author: item.author,
-                price: item.price,
-                quantity: item.quantity,
-                imageUrl: item.imageUrl, 
-              );
-            },
-          ),
+        color: const Color(0xFFF9F9F9),
+        child: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: ListView.builder(
+                  itemCount: cartItems.length,
+                  itemBuilder: (context, index) {
+                    final item = cartItems[index];
+                    return CartItemCard(
+                      productName: item.productName,
+                      author: item.author,
+                      price: item.price,
+                      quantity: item.quantity,
+                      imageUrl: item.imageUrl,
+                    );
+                  },
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    'Order Summary',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Total Payment'),
+                      Text(
+                        '\$50.96',
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: const Color(0xFF0C8A7B),
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle checkout button tap
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ), backgroundColor: Colors.transparent,
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12), 
+                        child: Text(
+                          'Proceed to Payment',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: const BottomNavigation(),
@@ -113,7 +168,7 @@ class CartItemCard extends StatefulWidget {
   final String author;
   final double price;
   final int quantity;
-  final String imageUrl; 
+  final String imageUrl;
 
   // ignore: use_key_in_widget_constructors
   const CartItemCard({
@@ -121,7 +176,7 @@ class CartItemCard extends StatefulWidget {
     required this.author,
     required this.price,
     required this.quantity,
-    required this.imageUrl, 
+    required this.imageUrl,
   });
 
   @override
@@ -142,9 +197,9 @@ class _CartItemCardState extends State<CartItemCard> {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
-      elevation: 0, 
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), 
-      color: Colors.white, 
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -156,7 +211,7 @@ class _CartItemCardState extends State<CartItemCard> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                  image: NetworkImage(widget.imageUrl), 
+                  image: NetworkImage(widget.imageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -169,13 +224,13 @@ class _CartItemCardState extends State<CartItemCard> {
                   Text(
                     widget.productName,
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis, 
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    'by ${widget.author}', 
-                    maxLines: 1, 
-                    overflow: TextOverflow.ellipsis, 
+                    'by ${widget.author}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   const SizedBox(height: 8),
@@ -187,16 +242,16 @@ class _CartItemCardState extends State<CartItemCard> {
               ),
             ),
             Expanded(
-              child: Center( 
+              child: Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end, 
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.blueGrey.withOpacity(0.1), 
+                        color: Colors.blueGrey.withOpacity(0.1),
                       ),
                       child: IconButton(
                         onPressed: () {
@@ -209,12 +264,12 @@ class _CartItemCardState extends State<CartItemCard> {
                         icon: const Icon(Icons.remove, size: 16, color: Colors.blueGrey),
                       ),
                     ),
-                    const SizedBox(width: 8), 
+                    const SizedBox(width: 8),
                     Text(
                       '$_quantity',
                       style: const TextStyle(fontSize: 14),
                     ),
-                    const SizedBox(width: 8), 
+                    const SizedBox(width: 8),
                     Container(
                       width: 32,
                       height: 32,

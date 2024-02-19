@@ -60,8 +60,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
       case 4:
         Navigator.push(
           context,
-          // MaterialPageRoute(builder: (context) => const ProfileScreen()),
-          MaterialPageRoute(builder: (context) => const BookDetailScreen()),
+          MaterialPageRoute(builder: (context) => const ProfileScreen()),
+          // MaterialPageRoute(builder: (context) => const BookDetailScreen()),
         );
         break;
     }
@@ -88,7 +88,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           label: 'Shopping',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person_2_outlined),
+          icon: Icon(Icons.person_outlined),
           label: 'Profile',
         ),
       ],
