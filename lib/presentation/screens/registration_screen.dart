@@ -59,14 +59,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        // Registration successful, navigate to login screen or home screen
         // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       } else {
-        // Registration failed, display error message
         // ignore: use_build_context_synchronously
         showDialog(
           context: context,
@@ -255,7 +253,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onPressed: _register,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0C8A7B),
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
@@ -268,7 +266,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                 ),
               ),
-              // const SizedBox(height: 16),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0), 
                 child: SizedBox(

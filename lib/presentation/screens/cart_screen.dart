@@ -50,21 +50,21 @@ class CartScreen extends StatelessWidget {
         author: 'Jane Austen',
         price: 8.99,
         quantity: 1,
-        imageUrl: 'https://images.penguinrandomhouse.com/cover/9780143105428',
+        imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgQ7X7RRNxMBTEzotPlqK2HQ2h591LyuNwLkUnesn7VNWo73dfxp2NyvmTKbl4nUiidxc&usqp=CAU',
       ),
       CartItem(
         productName: 'The Catcher in the Rye',
         author: 'J.D. Salinger',
         price: 11.49,
         quantity: 2,
-        imageUrl: 'https://images.newrepublic.com/dec8cb1ed9b399a3a1d2c62007d72cac9a17b80e.jpeg?auto=compress&w=768&h=undefined&ar=3%3A2&fit=crop&crop=faces&q=65&fm=jpg&ixlib=react-9.0.2',
+        imageUrl: 'https://png.pngtree.com/png-clipart/20230417/original/pngtree-business-book-cover-design-template-png-image_9060635.png',
       ),
       CartItem(
         productName: 'The Hobbit',
         author: 'J.R.R. Tolkien',
         price: 15.79,
         quantity: 1,
-        imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkJjpk3OjPXcGDTMxtcWOy_KwaP35SWeAjur_-XoHc-h2x8WBadWqMJ95DxtVMAU7No4M&usqp=CAU',
+        imageUrl: 'https://masterbundles.com/wp-content/uploads/2023/05/preview1-33.jpg',
       ),
     ];
 

@@ -27,7 +27,7 @@ class AuthService {
       await _saveToken(token);
       return token;
     } else {
-      throw response; // Throw the response for logging purposes
+      throw response;
     }
   }
 
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Error'),
+        // title: const Text('Error'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
@@ -283,26 +283,26 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 24.0),
               SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isLoggingIn ? null : _login,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0C8A7B),
-                    padding: const EdgeInsets.all(16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _isLoggingIn ? null : _login,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0C8A7B),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
                     ),
-                  ),
-                  child: _isLoggingIn
-                      ? const CircularProgressIndicator()
-                      : const Text(
-                          'Sign In',
-                          style: TextStyle(
-                            color: Colors.white,
+                    child: _isLoggingIn
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
+                  ),
                 ),
-              ),
               const SizedBox(height: 16.0),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 16.0),
