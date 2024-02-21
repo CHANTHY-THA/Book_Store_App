@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:test/presentation/screens/book_details_screen.dart';
 import 'package:test/presentation/widgets/bottom_navigation.dart';
+// import 'package:test/presentation/screens/book_detail_screen.dart';
 
 class FavouriteScreen extends StatelessWidget {
-  const FavouriteScreen({super.key});
+  const FavouriteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,18 +56,18 @@ class FavouriteScreen extends StatelessWidget {
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisExtent: 260.0, 
+            mainAxisExtent: 260.0,
             crossAxisSpacing: 16.0,
             mainAxisSpacing: 16.0,
           ),
           itemCount: books.length,
           itemBuilder: (context, index) {
-            return _buildBookCard(
-              books[index]['title'],
-              books[index]['author'],
-              books[index]['imageUrl'],
-              books[index]['rating'],
-              books[index]['price'],
+            return _BookCard(
+              title: books[index]['title'],
+              author: books[index]['author'],
+              imageUrl: books[index]['imageUrl'],
+              rating: books[index]['rating'],
+              price: books[index]['price'],
             );
           },
         ),
@@ -73,100 +75,136 @@ class FavouriteScreen extends StatelessWidget {
       bottomNavigationBar: const BottomNavigation(),
     );
   }
+}
 
-  Widget _buildBookCard(
-    String title,
-    String author,
-    String imageUrl,
-    double rating,
-    String price,
-  ) {
-    bool isSelected = false;
+class _BookCard extends StatefulWidget {
+  final String title;
+  final String author;
+  final String imageUrl;
+  final double rating;
+  final String price;
 
-    return Card(
-      color: Colors.transparent, 
-      elevation: 0,
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(8.0)),
-                child: SizedBox(
-                  child: imageUrl.isNotEmpty
-                      ? Image.network(
-                          imageUrl,
-                          width: double.infinity,
-                          height: 140,
-                          fit: BoxFit.cover,
-                        )
-                      : const SizedBox.shrink(),
+  const _BookCard({
+    required this.title,
+    required this.author,
+    required this.imageUrl,
+    required this.rating,
+    required this.price,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _BookCardState createState() => _BookCardState();
+}
+
+class _BookCardState extends State<_BookCard> {
+  bool isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BookDetailScreen(
+              title: widget.title,
+              author: widget.author,
+              imageUrl: widget.imageUrl,
+              rating: widget.rating,
+              price: widget.price,
+            ),
+          ),
+        );
+      },
+      child: Card(
+        color: Colors.transparent,
+        elevation: 0,
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(8.0)),
+                  child: SizedBox(
+                    child: widget.imageUrl.isNotEmpty
+                        ? Image.network(
+                      widget.imageUrl,
+                      width: double.infinity,
+                      height: 140,
+                      fit: BoxFit.cover,
+                    )
+                        : const SizedBox.shrink(),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-                child: Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.amber, size: 18.0),
-                    const SizedBox(width: 4.0),
-                    Text(rating.toString(), style: const TextStyle(fontSize: 14.0)),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber, size: 18.0),
+                      const SizedBox(width: 4.0),
+                      Text(widget.rating.toString(), style: const TextStyle(fontSize: 14.0)),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-                child: Container(
-                  constraints: const BoxConstraints(maxWidth: 120),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 120),
+                    child: Text(
+                      widget.title,
+                      style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                   child: Text(
-                    title,
-                    style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    widget.author,
+                    style: const TextStyle(fontSize: 14.0),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-                child: Text(
-                  author,
-                  style: const TextStyle(fontSize: 14.0),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                  child: Text(widget.price, style: const TextStyle(fontSize: 14.0, color: Colors.orange)),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-                child: Text(price, style: const TextStyle(fontSize: 14.0, color: Colors.orange)),
-              ),
-            ],
-          ),
-          Positioned(
-            top: 8.0,
-            right: 8.0,
-            child: GestureDetector(
-              onTap: () {
-                // Toggle the selection state
-                isSelected = !isSelected;
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isSelected ? Colors.blue : Colors.white,
-                ),
-                child: IconButton(
-                  icon: Icon(
-                    isSelected ? Icons.favorite : Icons.favorite_border_outlined,
-                    color: isSelected ? Colors.white : Colors.blueGrey,
+              ],
+            ),
+            Positioned(
+              top: 8.0,
+              right: 8.0,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isSelected = !isSelected;
+                  });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isSelected ? Colors.blue : Colors.white,
                   ),
-                  onPressed: () {
-                    // Handle favorite button pressed
-                  },
+                  child: IconButton(
+                    icon: Icon(
+                      isSelected ? Icons.favorite : Icons.favorite_border_outlined,
+                      color: isSelected ? Colors.white : Colors.blueGrey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isSelected = !isSelected;
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

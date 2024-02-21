@@ -1,6 +1,8 @@
 import 'dart:convert';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/presentation/screens/login_screen.dart';
 import 'package:test/presentation/widgets/bottom_navigation.dart';
 
@@ -22,13 +24,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     fetchUserData();
   }
+  
+    
+  static const String token = 'http://localhost:5000/api/auth';
 
   Future<void> fetchUserData() async {
-    final response = await http.get(Uri.parse('http://localhost:5000/api/user'));
+    final prefs = await SharedPreferences.getInstance();
+    final token  = prefs.getString('jwt_token');
+    final response = await http.get(Uri.parse('http://localhost:5000/api/user'),headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization':"Bearer $token"
+      });
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
-      final userData = jsonData['data'][0]; 
+      final userData = jsonData['data']; 
+      // print(userData['username']);
+      // print(userData['email']);
       setState(() {
         username = userData['username'];
         email = userData['email'];
@@ -65,11 +77,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     Text(
-                      username ?? 'Loading...',
+                      username ?? 'Pros',
                       style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      email ?? 'Loading...',
+                      email ?? 'pros@gmail.com',
                       style: const TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                   ],

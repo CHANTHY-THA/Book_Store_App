@@ -253,7 +253,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onPressed: _register,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0C8A7B),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
