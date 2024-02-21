@@ -5,7 +5,7 @@ import 'package:test/presentation/screens/cart_screen.dart';
 import 'package:test/presentation/screens/home_screen.dart';
 import 'package:test/presentation/screens/profile_screen.dart';
 import 'package:test/presentation/screens/book_details_screen.dart';
-import 'package:test/presentation/screens/product_search_screen.dart';
+// import 'package:test/presentation/screens/product_search_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -25,7 +25,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     CategoryScreen(),
     const CartScreen(),
     const ProfileScreen(),
-    const ProductSearchScreen(),
+    // const ProductSearchScreen(),
   ];
 
   void _onItemTapped(int index) {
